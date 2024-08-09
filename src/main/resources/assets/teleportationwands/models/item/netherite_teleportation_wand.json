@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "teleportationwands:item/netherite_teleportation_wand"
+  }
+}

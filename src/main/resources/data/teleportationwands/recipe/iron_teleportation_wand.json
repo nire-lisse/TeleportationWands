@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smithing_transform",
+  "group": "teleportationwands",
+  "addition": {
+    "item": "minecraft:iron_ingot"
+  },
+  "base": {
+    "item": "teleportationwands:copper_teleportation_wand"
+  },
+  "result": {
+    "count": 1,
+    "id": "teleportationwands:iron_teleportation_wand"
+  },
+  "template": {
+    "item": "minecraft:ender_eye"
+  }
+}

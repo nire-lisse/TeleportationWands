@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smithing_transform",
+  "group": "teleportationwands",
+  "addition": {
+    "item": "minecraft:diamond"
+  },
+  "base": {
+    "item": "teleportationwands:gold_teleportation_wand"
+  },
+  "result": {
+    "count": 1,
+    "id": "teleportationwands:diamond_teleportation_wand"
+  },
+  "template": {
+    "item": "minecraft:echo_shard"
+  }
+}

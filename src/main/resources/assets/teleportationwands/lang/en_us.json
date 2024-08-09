@@ -1,0 +1,9 @@
+{
+  "itemGroup.teleportationwands": "Teleportation Wands",
+
+  "item.teleportationwands.copper_teleportation_wand": "Copper Wand",
+  "item.teleportationwands.iron_teleportation_wand": "Iron Wand",
+  "item.teleportationwands.gold_teleportation_wand": "Gold Wand",
+  "item.teleportationwands.diamond_teleportation_wand": "Diamond Wand",
+  "item.teleportationwands.netherite_teleportation_wand": "Netherite Wand"
+}

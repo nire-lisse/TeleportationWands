@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smithing_transform",
+  "group": "teleportationwands",
+  "addition": {
+    "item": "minecraft:gold_ingot"
+  },
+  "base": {
+    "item": "teleportationwands:iron_teleportation_wand"
+  },
+  "result": {
+    "count": 1,
+    "id": "teleportationwands:gold_teleportation_wand"
+  },
+  "template": {
+    "item": "minecraft:amethyst_shard"
+  }
+}

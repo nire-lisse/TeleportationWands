@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smithing_transform",
+  "group": "teleportationwands",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "teleportationwands:diamond_teleportation_wand"
+  },
+  "result": {
+    "count": 1,
+    "id": "teleportationwands:netherite_teleportation_wand"
+  },
+  "template": {
+    "item": "minecraft:nether_star"
+  }
+}
