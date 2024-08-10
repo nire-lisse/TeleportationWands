@@ -18,7 +18,7 @@ public class Config {
                     .comment("Wand cooldown")
                     .defineInRange("cooldown", defaultCooldown, 1, Integer.MAX_VALUE);
             safeChecks = builder
-                    .comment("MAX_DISTANCE")
+                    .comment("The maximum number of blocks that you are teleporting to above the block you are looking at")
                     .defineInRange("safeChecks", defaultSafeChecks, 1, Integer.MAX_VALUE);
             builder.pop();
         }
