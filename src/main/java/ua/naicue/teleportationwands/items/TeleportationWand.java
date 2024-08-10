@@ -11,6 +11,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import ua.naicue.teleportationwands.Config;
 import ua.naicue.teleportationwands.network.NetworkHandler;
 import ua.naicue.teleportationwands.network.packets.PacketPlayerMotion;
 
@@ -20,12 +21,12 @@ public class TeleportationWand extends Item {
     private final int cooldown;
     private final int safeChecks;
 
-    public TeleportationWand(double maxDistance, int cooldown, int safeChecks) {
+    public TeleportationWand(Config.WandStats stats) {
         super(new Properties().stacksTo(1));
 
-        this.maxDistance = maxDistance;
-        this.cooldown = cooldown;
-        this.safeChecks = safeChecks;
+        this.maxDistance = stats.maxDistance.get();
+        this.cooldown = stats.cooldown.get();
+        this.safeChecks = stats.safeChecks.get();
     }
 
     @Override
@@ -52,28 +53,27 @@ public class TeleportationWand extends Item {
                     continue;
                 }
 
-                player.getCooldowns().addCooldown(this, cooldown);
-
                 player.teleportTo(pos.getX() + 0.5D, pos.getY(), pos.getZ()+ 0.5d);
 
                 break;
             }
+        } else {
+            Vec3 current = player.position();
+            Vec3 target = ray.getLocation();
 
-            player.fallDistance = 0;
+            Vec3 motion = player.getDeltaMovement().add(target.subtract(current).normalize());
 
-            return InteractionResultHolder.success(player.getItemInHand(usedHand));
+            target = target.subtract(view);
+
+            player.teleportTo(target.x, target.y, target.z);
+
+            NetworkHandler.sendToClient(new PacketPlayerMotion(motion.x, motion.y, motion.z), (ServerPlayer) player);
+
+            player.setDeltaMovement(Vec3.ZERO);
         }
 
-        Vec3 current = player.position();
-        Vec3 target = ray.getLocation();
-
-        Vec3 motion = player.getDeltaMovement().add(target.subtract(current).normalize());
-
-        player.teleportTo(target.x - view.x, target.y - view.y, target.z - view.z);
-
-        NetworkHandler.sendToClient(new PacketPlayerMotion(motion.x, motion.y, motion.z), (ServerPlayer) player);
-
         player.getCooldowns().addCooldown(this, cooldown);
+        player.fallDistance = 0;
 
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
     }
