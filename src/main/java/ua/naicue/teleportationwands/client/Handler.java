@@ -13,7 +13,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import org.apache.commons.codec.DecoderException;
 import org.lwjgl.opengl.GL11;
 import ua.naicue.teleportationwands.Config;
 import ua.naicue.teleportationwands.TeleportationWands;
@@ -26,7 +25,6 @@ import static ua.naicue.teleportationwands.utils.Utils.getTarget;
 
 @EventBusSubscriber(modid = TeleportationWands.MODID)
 public class Handler {
-
     @SubscribeEvent
     public static void RenderLevelStageEvent(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_WEATHER) {
@@ -34,7 +32,12 @@ public class Handler {
         }
 
         Player player = Minecraft.getInstance().player;
-        Level level = Minecraft.getInstance().level;
+
+        if (player == null) {
+            return;
+        }
+
+        Level level = player.getCommandSenderWorld();
 
         Optional<Vec3> target = Optional.empty();
 
@@ -70,7 +73,7 @@ public class Handler {
         stack.translate(-camera.x, -camera.y, -camera.z);
 
         double x = pos.getX();
-        double y = pos.getY();
+        double y = pos.getY() - 1;
         double z = pos.getZ();
 
         BufferBuilder buffer;
@@ -81,10 +84,10 @@ public class Handler {
 
         if (player.isShiftKeyDown()) {
             buffer = tesselator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
-            LevelRenderer.renderLineBox(stack, buffer, x, y - 1, z, x + 1, y, z + 1, red, green, blue, 1f);
+            LevelRenderer.renderLineBox(stack, buffer, x, y, z, x + 1, y + 1, z + 1, red, green, blue, 1f);
         } else {
             buffer = tesselator.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
-            LevelRenderer.addChainedFilledBoxVertices(stack, buffer, x, y - 1, z, x + 1, y, z + 1,
+            LevelRenderer.addChainedFilledBoxVertices(stack, buffer, x, y, z, x + 1, y + 1, z + 1,
                     red, green, blue, 0.5f);
         }
 

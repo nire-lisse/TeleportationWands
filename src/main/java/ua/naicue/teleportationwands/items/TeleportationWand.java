@@ -66,7 +66,7 @@ public class TeleportationWand extends Item {
                 player.setSprinting(false);
             }
 
-            Vec3 motion = player.getDeltaMovement().add(target.get().subtract(current).normalize());
+            Vec3 motion = player.getDeltaMovement().add(target.get().subtract(current).normalize().multiply(0.7, 0.3, 0.7));
 
             NetworkHandler.sendToClient(new PacketPlayerMotion(motion.x, motion.y, motion.z), (ServerPlayer) player);
 
