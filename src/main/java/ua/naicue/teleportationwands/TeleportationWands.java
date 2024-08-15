@@ -12,9 +12,11 @@ public class TeleportationWands {
     public static final String MODID = "teleportationwands";
 
     public TeleportationWands(IEventBus bus, ModContainer container) {
-        container.registerConfig(ModConfig.Type.STARTUP, Config.spec);
+        container.registerConfig(ModConfig.Type.CLIENT, Config.clientSpec);
+        container.registerConfig(ModConfig.Type.STARTUP, Config.startupSpec);
 
         ItemRegistry.register(bus);
         CreativeTabRegistry.register(bus);
     }
 }
+

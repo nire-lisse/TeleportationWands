@@ -1,7 +1,11 @@
 package ua.naicue.teleportationwands;
 
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.Logging;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.LogManager;
 
 public class Config {
     public static class WandStats {
@@ -41,37 +45,56 @@ public class Config {
         }
     }
 
-    public static Color color;
+    public static class Startup {
+        public static WandStats copper;
+        public static WandStats iron;
+        public static WandStats gold;
+        public static WandStats diamond;
+        public static WandStats netherite;
 
-    public static WandStats copper;
-    public static WandStats iron;
-    public static WandStats gold;
-    public static WandStats diamond;
-    public static WandStats netherite;
-
-    private Config(ModConfigSpec.Builder builder) {
-        builder.push("General");
-
-        color = new Color(builder);
-
-        builder.pop();
-
-        copper = new WandStats(builder, "copper", 10, 35, 1);
-        iron = new WandStats(builder, "iron", 15, 30, 2);
-        gold = new WandStats(builder, "gold", 20, 25, 3);
-        diamond = new WandStats(builder, "diamond", 25, 20, 4);
-        netherite = new WandStats(builder, "netherite", 30, 10, 5);
+        Startup(ModConfigSpec.Builder builder) {
+            copper = new WandStats(builder, "copper", 10, 35, 1);
+            iron = new WandStats(builder, "iron", 15, 30, 2);
+            gold = new WandStats(builder, "gold", 20, 25, 3);
+            diamond = new WandStats(builder, "diamond", 25, 20, 4);
+            netherite = new WandStats(builder, "netherite", 30, 10, 5);
+        }
     }
 
-    public static final ModConfigSpec spec;
-    private static final Config config;
+    public static class Client {
+        public static Color color;
+
+        Client(ModConfigSpec.Builder builder) {
+            color = new Color(builder);
+        }
+    }
+
+    static final ModConfigSpec clientSpec;
+    public static final Client CLIENT;
 
     static {
-        Pair<Config, ModConfigSpec> pair = new ModConfigSpec.Builder()
-                .configure(Config::new);
+        final Pair<Client, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Client::new);
+        clientSpec = specPair.getRight();
+        CLIENT = specPair.getLeft();
+    }
 
-        spec = pair.getRight();
-        config = pair.getLeft();
+    static final ModConfigSpec startupSpec;
+    public static final Startup STARTUP;
+
+    static {
+        final Pair<Startup, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Startup::new);
+        startupSpec = specPair.getRight();
+        STARTUP = specPair.getLeft();
+    }
+
+    @SubscribeEvent
+    public static void onLoad(final ModConfigEvent.Loading configEvent) {
+        LogManager.getLogger().debug(Logging.FORGEMOD, "Loaded Teleportation Wands config file {}", configEvent.getConfig().getFileName());
+    }
+
+    @SubscribeEvent
+    public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
+        LogManager.getLogger().debug(Logging.FORGEMOD, "Teleportation Wands config just got changed on the file system!");
     }
 }
 

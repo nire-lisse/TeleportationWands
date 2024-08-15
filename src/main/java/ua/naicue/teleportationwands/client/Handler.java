@@ -78,9 +78,9 @@ public class Handler {
 
         BufferBuilder buffer;
 
-        float red = Config.color.red.get().floatValue() / 255f;
-        float green = Config.color.red.get().floatValue() / 255f;
-        float blue = Config.color.red.get().floatValue() / 255f;
+        float red = (float) (Config.Client.color.red.get() / 255f);
+        float green = (float) (Config.Client.color.green.get() / 255f);
+        float blue = (float) (Config.Client.color.blue.get() / 255f);
 
         if (player.isShiftKeyDown()) {
             buffer = tesselator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);

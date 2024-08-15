@@ -5,5 +5,20 @@
   "item.teleportationwands.iron_teleportation_wand": "Iron Wand",
   "item.teleportationwands.gold_teleportation_wand": "Gold Wand",
   "item.teleportationwands.diamond_teleportation_wand": "Diamond Wand",
-  "item.teleportationwands.netherite_teleportation_wand": "Netherite Wand"
+  "item.teleportationwands.netherite_teleportation_wand": "Netherite Wand",
+
+  "teleportationwands.configuration.Color": "Block highlight color",
+  "teleportationwands.configuration.red": "red",
+  "teleportationwands.configuration.green": "green",
+  "teleportationwands.configuration.blue": "blue",
+
+  "teleportationwands.configuration.copper wand": "Copper Wand",
+  "teleportationwands.configuration.iron wand": "Iron Wand",
+  "teleportationwands.configuration.gold wand": "Gold Wand",
+  "teleportationwands.configuration.diamond wand": "Diamond Wand",
+  "teleportationwands.configuration.netherite wand": "Netherite Wand",
+
+  "teleportationwands.configuration.maxDistance": "max distance",
+  "teleportationwands.configuration.cooldown": "cooldown",
+  "teleportationwands.configuration.safeChecks": "safe checks"
 }
