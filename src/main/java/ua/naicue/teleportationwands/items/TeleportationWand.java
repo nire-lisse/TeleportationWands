@@ -5,6 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Pose;
@@ -72,6 +74,8 @@ public class TeleportationWand extends Item {
 
             player.setDeltaMovement(Vec3.ZERO);
         }
+
+        level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.MASTER, 1F, 1F);
 
         player.getCooldowns().addCooldown(this, cooldown);
         player.fallDistance = 0;

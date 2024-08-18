@@ -97,5 +97,3 @@ public class Config {
         LogManager.getLogger().debug(Logging.FORGEMOD, "Teleportation Wands config just got changed on the file system!");
     }
 }
-
-

@@ -19,4 +19,3 @@ public class TeleportationWands {
         CreativeTabRegistry.register(bus);
     }
 }
-
