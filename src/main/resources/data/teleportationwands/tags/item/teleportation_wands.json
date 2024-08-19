@@ -1,0 +1,9 @@
+{
+  "values": [
+    "teleportationwands:copper_teleportation_wand",
+    "teleportationwands:iron_teleportation_wand",
+    "teleportationwands:gold_teleportation_wand",
+    "teleportationwands:diamond_teleportation_wand",
+    "teleportationwands:netherite_teleportation_wand"
+  ]
+}

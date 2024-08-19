@@ -4,20 +4,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import ua.naicue.teleportationwands.items.TeleportationWand;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class Utils {
-    public static Optional<Vec3> getTarget(Level level, Entity entity, TeleportationWand wand) {
-        int safeChecks = wand.getSafeChecks();
-
+    public static Optional<Vec3> getTarget(Level level, Entity entity, double maxDistance, int safeChecks) {
         Vec3 view = entity.getViewVector(0);
         Vec3 eyeVec = entity.getEyePosition(0);
 
-        List<BlockPos> list = rayTracing(level, eyeVec, view, wand);
+        List<BlockPos> list = rayTracing(level, eyeVec, view, maxDistance);
 
         if (entity.isShiftKeyDown()) {
             BlockPos pos = list.getLast();
@@ -49,12 +46,10 @@ public class Utils {
     }
 
 
-    public static List<BlockPos> rayTracing(Level level, Vec3 start, Vec3 view, TeleportationWand wand) {
+    public static List<BlockPos> rayTracing(Level level, Vec3 start, Vec3 view, double maxDistance) {
         List<BlockPos> list = new ArrayList<>();
 
         list.add(new BlockPos((int) Math.floor(start.x), (int) Math.floor(start.y), (int) Math.floor(start.z)));
-
-        double maxDistance = wand.getMaxDistance();
 
         for (int i = 0; i < maxDistance * 2; i++) {
             BlockPos blockPos = new BlockPos((int) Math.floor(start.x), (int) Math.floor(start.y), (int) Math.floor(start.z));

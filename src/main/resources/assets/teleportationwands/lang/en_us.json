@@ -20,5 +20,8 @@
 
   "teleportationwands.configuration.maxDistance": "max distance",
   "teleportationwands.configuration.cooldown": "cooldown",
-  "teleportationwands.configuration.safeChecks": "safe checks"
+  "teleportationwands.configuration.safeChecks": "safe checks",
+
+  "enchantment.teleportationwands.max_distance": "Max Distance",
+  "enchantment.teleportationwands.cooldown": "Cooldown"
 }

@@ -6,8 +6,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,6 +19,7 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import org.lwjgl.opengl.GL11;
 import ua.naicue.teleportationwands.Config;
 import ua.naicue.teleportationwands.TeleportationWands;
+import ua.naicue.teleportationwands.init.EnchantmentsRegistry;
 import ua.naicue.teleportationwands.items.TeleportationWand;
 
 import java.util.Optional;
@@ -43,7 +47,9 @@ public class Handler {
 
         for (InteractionHand hand : InteractionHand.values()) {
             if (player.getItemInHand(hand).getItem() instanceof TeleportationWand wand) {
-                target = getTarget(level, player, wand);
+                target = getTarget(level, player,
+                        wand.getMaxDistance() * (1 + 0.2 * player.getMainHandItem().getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(level.holderLookup(Registries.ENCHANTMENT).getOrThrow(EnchantmentsRegistry.MAX_DISTANCE))),
+                        wand.getSafeChecks());
             }
         }
 

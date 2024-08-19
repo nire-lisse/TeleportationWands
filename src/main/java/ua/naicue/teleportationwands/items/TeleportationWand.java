@@ -2,7 +2,9 @@ package ua.naicue.teleportationwands.items;
 
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -13,9 +15,11 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import ua.naicue.teleportationwands.Config;
+import ua.naicue.teleportationwands.init.EnchantmentsRegistry;
 import ua.naicue.teleportationwands.network.NetworkHandler;
 import ua.naicue.teleportationwands.network.packets.PacketPlayerMotion;
 
@@ -28,8 +32,6 @@ public class TeleportationWand extends Item {
     private final double maxDistance;
     private final int cooldown;
     private final int safeChecks;
-
-    int tickCount = 0;
 
     public TeleportationWand(Config.WandStats stats) {
         super(new Properties().stacksTo(1));
@@ -45,7 +47,12 @@ public class TeleportationWand extends Item {
             return InteractionResultHolder.success(player.getItemInHand(usedHand));
         }
 
-        Optional<Vec3> target = getTarget(level, player, this);
+        var enchants = player.getMainHandItem().getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+
+        double maxDistance = this.maxDistance * (1 + 0.2 * enchants.getLevel(level.holderLookup(Registries.ENCHANTMENT).getOrThrow(EnchantmentsRegistry.MAX_DISTANCE)));
+        int cooldown = (int) (this.cooldown * (1 - 0.2 * enchants.getLevel(level.holderLookup(Registries.ENCHANTMENT).getOrThrow(EnchantmentsRegistry.COOLDOWN))));
+
+        Optional<Vec3> target = getTarget(level, player, maxDistance, this.safeChecks);
 
         if (target.isEmpty()) {
             return InteractionResultHolder.fail(player.getItemInHand(usedHand));
@@ -81,5 +88,15 @@ public class TeleportationWand extends Item {
         player.fallDistance = 0;
 
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 10;
     }
 }

@@ -1,0 +1,13 @@
+{
+  "values": [
+    {
+      "id": "teleportationwands:cooldown",
+      "required": false
+    },
+    {
+      "id": "teleportationwands:max_distance",
+      "required": false
+    }
+  ],
+  "replace": false
+}
