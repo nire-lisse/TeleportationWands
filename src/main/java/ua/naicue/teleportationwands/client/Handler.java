@@ -71,7 +71,6 @@ public class Handler {
 
         Tesselator tesselator = Tesselator.getInstance();
 
-
         stack.pushPose();
 
         RenderSystem.applyModelViewMatrix();
